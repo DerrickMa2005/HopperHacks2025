@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div>
       <div className='flex justify-end mt-6 mr-4 gap-4'>
-        <Button variant='outlined' size="medium" onClick ={() => router.push("/test")}>Sign In</Button>
+        <Button variant='outlined' size="medium" onClick ={() => router.push("/")}>Sign In</Button>
         <Button variant='outlined'size="medium">Sign Up</Button>
       </div>
       <Font family="Funnel Sans">
