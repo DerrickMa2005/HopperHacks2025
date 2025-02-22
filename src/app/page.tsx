@@ -2,11 +2,12 @@
 import { Button } from '@mui/material';
 import Font, { Text } from 'react-font';
 import { useRouter } from 'next/navigation';
+import SampleEventWheel from './Components/sampleEvents';
 
 export default function Home() {
   const router = useRouter();
   return (
-    <div>
+    <div className="mb-7">
       <div className='flex justify-end mt-6 mr-4 gap-4'>
         <Button variant='outlined' size="medium" onClick ={() => router.push("/")}>Sign In</Button>
         <Button variant='outlined'size="medium">Sign Up</Button>
@@ -30,6 +31,10 @@ export default function Home() {
               <h2>Comprehensive recommender system to inform you of events based on your preferences and interests</h2>
             </div>
           </div>
+          <div className = 'flex-col gap-8 items-center flex'>
+            <h1>Current Events:</h1>
+              <SampleEventWheel />
+            </div>
           <Button variant='contained' size="large">Get Started</Button>
         </div>
       </Font>
