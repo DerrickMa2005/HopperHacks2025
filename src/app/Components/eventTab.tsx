@@ -6,12 +6,12 @@ import Placeholder from '../Assets/placeholder.png';
 export default function EventTab({event} : {event: Record<string,string>}) {
     const [isOpen, setIsOpen] = useState(false);
     const getTime = (date : string) => {
-        var d = new Date(Number(date) * 1000);
+        let d = new Date(Number(date) * 1000);
         return (d.getHours() > 12 ? d.getHours() - 12 : d.getHours()) + ":" + 
         d.getMinutes() + (d.getMinutes() < 10 ? "0" : "") + " " + (d.getHours() > 12 ? "PM" : "AM");
     }
     const getDate = (date : string) => {
-        var d = new Date(Number(date) * 1000);
+        let d = new Date(Number(date) * 1000);
         return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
     }
     return (

@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Button, FormControl, MenuItem, Select, InputLabel, SelectChangeEvent, TextField} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Modal } from '@mui/material';
-import { time } from 'console';
 
 export default function DropdownForm({open, handleOpen} : {open : boolean, 
     handleOpen : (open: boolean) => void}){

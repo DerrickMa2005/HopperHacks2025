@@ -1,7 +1,6 @@
 'use client'
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { createTheme } from '@mui/material/styles';
 import { Navbar } from '../Components/navbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import DropdownForm from '../Components/dropdownForm';
@@ -38,16 +37,6 @@ export default function QuestionPage() {
             console.log(error);
         }
     };
-    const buttontheme = createTheme({
-        palette: {
-        primary: {
-            main: '#686868',
-        },
-        secondary: {
-            main: '#00ff00',
-        },
-        },
-    });
     return (
         <div className='flex flex-col w-screen gap-0'>
             <Navbar />
