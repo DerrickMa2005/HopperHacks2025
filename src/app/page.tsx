@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@mui/material';
-import Font, { Text } from 'react-font';
+import Font from 'react-font';
 import { useRouter } from 'next/navigation';
 import SampleEventWheel from './Components/sampleEvents';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -20,11 +20,12 @@ export default function Home() {
   });
   const router = useRouter();
   return (
+
     <div className="mb-12">
       <ThemeProvider theme={buttontheme}>
       <div className='bg-green-400 flex justify-end p-4 gap-4 border-black border-b-4'>
-        <Button variant='contained' size="medium" onClick ={() => router.push("/")}>Sign In</Button>
-        <Button variant='contained'size="medium">Sign Up</Button>
+        <Button variant='contained' size="medium" onClick={() => router.push("/signin")>Sign In</Button>
+        <Button variant='contained'size="medium" onClick={() => router.push('/signup')>Sign Up</Button>
       </div>
       </ThemeProvider>
       <Font family="Funnel Sans">
@@ -53,7 +54,7 @@ export default function Home() {
             <h1>Current Events:</h1>
               <SampleEventWheel />
             </div>
-            <ThemeProvider theme={buttontheme}>
+            <ThemeProvider theme={buttontheme} onClick={() => router.push('/questionPage')>
           <Button className={"hover:drop-shadow-lg ease-in duration-300"} variant='contained' size="large">Find Tailored Events</Button>
         </ThemeProvider>
         </div>
