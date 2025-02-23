@@ -75,35 +75,19 @@ export function Navbar() {
   }
   return (
     <div className='bg-green-400 flex p-4 border-black border-b-4 items-center justify-between'>
-      <div
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        className='flex gap-4 items-center'
-      >
-        {hover ? (
-          <HomeTwoToneIcon fontSize='large' onClick={() => router.push('/')} />
-        ) : (
-          <HomeOutlinedIcon fontSize='large' onClick={() => router.push('/')} />
-        )}
-      </div>
-
-      <ThemeProvider theme={buttontheme}>
-        <div className='flex gap-4 justify-end items-center'>
-          {user ? (
-            <Image
-              onClick={logout}
-              src={userPicture || "/placeholder.png"}
-              alt=''
-              width="50"
-              height="50"
-            />
-          ) : (
-            <Button variant='contained' size="medium" onClick={() => login()}>
-              Sign In
-            </Button>
-          )}
+        <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} 
+                className='flex gap-4 items-center margin-100'>
+                    {hover ? <HomeTwoToneIcon fontSize='large' onClick={() => router.push('/')}></HomeTwoToneIcon>
+                    : <HomeOutlinedIcon fontSize='large' onClick={() => router.push('/')}></HomeOutlinedIcon>}
         </div>
-      </ThemeProvider>
-    </div>
-  );
+        <ThemeProvider theme={buttontheme}>
+            <div className='flex gap-4 justify-end items-center'>
+                            <div className='flex flex-row gap-4 justify-end items-center'>
+                          {user ? <Image className="rounded-xl border-black border-4" onClick = {() =>{
+                            logout();
+                          } } src = {userPicture} alt='' width = "50" height = "50"></Image>:<Button variant='contained' size="medium" onClick={() => login()}>Sign In</Button>}
+                            </div>
+            </div>
+        </ThemeProvider>
+    </div>);
 }
