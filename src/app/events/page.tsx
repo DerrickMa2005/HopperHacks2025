@@ -10,7 +10,6 @@ export default function Events(){
     const [eventList, setEventList] = useState<Record<string,string>[]>([]);
     useEffect(() => {
         setEventList(JSON.parse(localStorage.getItem("events") || "[]"));
-
     }, []);
   
     const buttontheme = createTheme({
@@ -30,7 +29,6 @@ export default function Events(){
                 <h1 className = 'text-4xl'>Your Recommended Events</h1>
                 <div className = 'flex flex-col items-center rounded-md gap-8 w-3/4'>
                 {eventList.length === 0 ? <div>Try Adjusting your preferences to see more events.
-
                 </div>:eventList.map((e:Record<string,string>) => <EventTab key={e.title} event={e}/>)}
                 </div>
                 <ThemeProvider theme={buttontheme}>

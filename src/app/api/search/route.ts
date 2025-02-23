@@ -68,7 +68,6 @@ export async function POST(req: NextRequest) {
       vector,
       topK: topK,
       includeMetadata: true,
-      filter: (Object.keys(filter).length > 0) ? filter : undefined
     });
     return NextResponse.json({ data: searchResults.matches.map((match) => match.metadata) });
   } catch (error) {
