@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import { Button, FormControl, MenuItem, Select, InputLabel, SelectChangeEvent } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import Font from 'react-font';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {Navbar} from '../Components/navbar';
+import { Navbar } from '../Components/navbar';
 export default function QuestionPage() {
     const [category, setCategory] = useState("");
     const [theme, setTheme] = useState("");
@@ -48,10 +47,8 @@ export default function QuestionPage() {
         },
     });
     return (
-    <div className="mb-8">
-        <Navbar />
-        <Font family="Funnel Sans">
             <div className='flex flex-col mt-24 items-center gap-8'>
+                <Navbar/>
                 <h1 className='text-3xl mb-6'>Please select your event preferences.</h1>
                 <FormControl className='w-1/6'>
                     <InputLabel>Theme</InputLabel>
@@ -73,7 +70,6 @@ export default function QuestionPage() {
                     <Button variant='contained' size='medium' onClick={handleSubmit}>Show Me My Events</Button>
                 </ThemeProvider>
             </div>
-        </Font>
-    </div>
+
     )
 }
