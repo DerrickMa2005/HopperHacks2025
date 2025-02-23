@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, FormControl, MenuItem, Select, InputLabel, SelectChangeEvent } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import Font from 'react-font';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 export default function QuestionPage() {
     const [category, setCategory] = useState("");
     const [theme, setTheme] = useState("");
@@ -27,8 +28,24 @@ export default function QuestionPage() {
         )
         router.push('/events');
     };
-
+    const buttontheme = createTheme({
+        palette: {
+        primary: {
+            main: '#686868',
+        },
+        secondary: {
+            main: '#00ff00',
+        },
+        },
+    });
     return (
+        <div className="mb-12">
+        <ThemeProvider theme={buttontheme}>
+                <div className='bg-green-400 flex justify-end p-4 gap-4 border-black border-b-4'>
+                  <Button variant='contained' size="medium" onClick={() => router.push("/signin")}>Sign In</Button>
+                  <Button variant='contained' size="medium" onClick={() => router.push('/signup')}>Sign Up</Button>
+                </div>
+              </ThemeProvider>
         <Font family="Funnel Sans">
             <div className='flex flex-col mt-24 items-center gap-8'>
                 <h1 className='text-3xl mb-12'>Please select your event preferences.</h1>
@@ -48,9 +65,11 @@ export default function QuestionPage() {
                 <InputLabel>Event Time</InputLabel>
                 <Select value = {timePeriod} onChange={(event: SelectChangeEvent) => setTimePeriod(event.target.value)}>{timePeriods.map((e) => <MenuItem key = {e} value = {e}>{e}</MenuItem>)}</Select>
                 </FormControl>
-                <Button variant='contained' size='medium' onClick={handleSubmit}>Recommend Events</Button>
+                <ThemeProvider theme={buttontheme}>
+                    <Button variant='contained' size='medium' onClick={handleSubmit}>Recommend Events</Button>
+                </ThemeProvider>
             </div>
         </Font>
-
+        </div>
     )
 }

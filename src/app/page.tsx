@@ -30,7 +30,7 @@ export default function Home() {
         </div>
       </ThemeProvider>
       <Font family="Funnel Sans">
-        <div className='text-4xl flex flex-col gap-16 items-center mt-24'>
+        <div className='text-4xl flex flex-col gap-16 items-center mt-10'>
           <div className='flex flex-col gap-10 items-center'>
             <h1>Looking to get out of your dorm but keep missing club events?</h1>
             <h1>Not sure what events campus has to offer?</h1>
@@ -58,7 +58,8 @@ export default function Home() {
             </div>
           </div>
           <ThemeProvider theme={buttontheme}>
-            <Button className={"hover:drop-shadow-lg ease-in duration-300"} variant='contained' size="large" onClick={() => router.push('/questionPage') }>Find Tailored Events</Button>
+            <Button className={"hover:drop-shadow-lg ease-in duration-300"} variant='contained' size="large" onClick={() => router.push('/questionPage') }>
+              Find Tailored Events</Button>
         </ThemeProvider>
         </div>
       </Font >
