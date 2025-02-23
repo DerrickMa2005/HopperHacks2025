@@ -7,9 +7,10 @@
   <body>
     <p>Google Calendar API Quickstart</p>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
+    <!-- Buttons to initiate auth sequence, sign out, and create a test event -->
     <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
     <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+    <button id="create_event_button" onclick="createTestEvent()" style="visibility:hidden;">Create Test Event</button>
 
     <pre id="content" style="white-space: pre-wrap;"></pre>
 
@@ -18,17 +19,17 @@
       /* exported gisLoaded */
       /* exported handleAuthClick */
       /* exported handleSignoutClick */
+      /* exported createTestEvent */
 
-      // TODO(developer): Set to client ID and API key from the Developer Console
+      // Set your client ID and API key from the Developer Console
       const CLIENT_ID = '999021691122-9cgnoel0l7rnpe81mg1armk9smj9j5eo.apps.googleusercontent.com';
-      const API_KEY = 'AIzaSyAOsDGY2erGR6eeB37PM8goO27ePCuNkM4';
+      const API_KEY = '';
 
       // Discovery doc URL for APIs used by the quickstart
       const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
 
-      // Authorization scopes required by the API; multiple scopes can be
-      // included, separated by spaces.
-      const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+      // Use a scope that allows event creation
+      const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
 
       let tokenClient;
       let gapiInited = false;
@@ -36,6 +37,7 @@
 
       document.getElementById('authorize_button').style.visibility = 'hidden';
       document.getElementById('signout_button').style.visibility = 'hidden';
+      document.getElementById('create_event_button').style.visibility = 'hidden';
 
       /**
        * Callback after api.js is loaded.
@@ -45,8 +47,7 @@
       }
 
       /**
-       * Callback after the API client is loaded. Loads the
-       * discovery doc to initialize the API.
+       * Callback after the API client is loaded. Loads the discovery doc to initialize the API.
        */
       async function initializeGapiClient() {
         await gapi.client.init({
@@ -80,30 +81,28 @@
       }
 
       /**
-       *  Sign in the user upon button click.
+       * Sign in the user upon button click.
        */
       function handleAuthClick() {
         tokenClient.callback = async (resp) => {
           if (resp.error !== undefined) {
-            throw (resp);
+            throw resp;
           }
           document.getElementById('signout_button').style.visibility = 'visible';
           document.getElementById('authorize_button').innerText = 'Refresh';
-          await listUpcomingEvents();
+          // Show the Create Event button after successful authentication
+          document.getElementById('create_event_button').style.visibility = 'visible';
         };
 
         if (gapi.client.getToken() === null) {
-          // Prompt the user to select a Google Account and ask for consent to share their data
-          // when establishing a new session.
           tokenClient.requestAccessToken({prompt: 'consent'});
         } else {
-          // Skip display of account chooser and consent dialog for an existing session.
           tokenClient.requestAccessToken({prompt: ''});
         }
       }
 
       /**
-       *  Sign out the user upon button click.
+       * Sign out the user upon button click.
        */
       function handleSignoutClick() {
         const token = gapi.client.getToken();
@@ -113,41 +112,70 @@
           document.getElementById('content').innerText = '';
           document.getElementById('authorize_button').innerText = 'Authorize';
           document.getElementById('signout_button').style.visibility = 'hidden';
+          document.getElementById('create_event_button').style.visibility = 'hidden';
         }
       }
 
       /**
-       * Print the summary and start datetime/date of the next ten events in
-       * the authorized user's calendar. If no events are found an
-       * appropriate message is printed.
+       * Helper function to calculate next Wednesday from a given date.
        */
-      async function listUpcomingEvents() {
-        let response;
-        try {
-          const request = {
-            'calendarId': 'primary',
-            'timeMin': (new Date()).toISOString(),
-            'showDeleted': false,
-            'singleEvents': true,
-            'maxResults': 10,
-            'orderBy': 'startTime',
-          };
-          response = await gapi.client.calendar.events.list(request);
-        } catch (err) {
-          document.getElementById('content').innerText = err.message;
-          return;
+      function getNextWednesday(date) {
+        let result = new Date(date);
+        // Wednesday is day 3 (0 = Sunday, 1 = Monday, etc.)
+        let day = result.getDay();
+        let daysUntilWednesday = (3 - day + 7) % 7;
+        if (daysUntilWednesday === 0) {
+          daysUntilWednesday = 7; // if today is Wednesday, set to next week
         }
+        result.setDate(result.getDate() + daysUntilWednesday);
+        return result;
+      }
 
-        const events = response.result.items;
-        if (!events || events.length == 0) {
-          document.getElementById('content').innerText = 'No events found.';
-          return;
+      /**
+       * Creates a test event on the authenticated calendar (sbuwyd@gmail.com) and invites ruthvick2005@gmail.com.
+       * The event is scheduled for next Wednesday from 3:00 PM to 4:00 PM.
+       */
+      async function createTestEvent() {
+        let now = new Date();
+        let nextWednesday = getNextWednesday(now);
+
+        // Set start time: next Wednesday at 3:00 PM
+        nextWednesday.setHours(15, 0, 0);
+        let startDateTime = nextWednesday.toISOString();
+
+        // Set end time: one hour later (4:00 PM)
+        let endTime = new Date(nextWednesday.getTime() + 60 * 60 * 1000);
+        let endDateTime = endTime.toISOString();
+
+        // Construct the event object
+        let event = {
+          summary: 'Test Event: Invitation for Ruthvick',
+          description: 'This is a test event to invite ruthvick2005@gmail.com.',
+          start: {
+            dateTime: startDateTime,
+            timeZone: 'America/Los_Angeles' // Adjust to your desired timezone
+          },
+          end: {
+            dateTime: endDateTime,
+            timeZone: 'America/Los_Angeles'
+          },
+          attendees: [
+            { email: 'ruthvick2005@gmail.com' }
+          ]
+        };
+
+        try {
+          let request = await gapi.client.calendar.events.insert({
+            calendarId: 'primary',
+            resource: event,
+            sendUpdates: 'all' // This sends email notifications to attendees
+          });
+          console.log('Event created: ', request.result.htmlLink);
+          document.getElementById('content').innerText = 'Event created successfully! Check your calendar.';
+        } catch (err) {
+          console.error('Error creating event: ', err);
+          document.getElementById('content').innerText = 'Error creating event: ' + err.message;
         }
-        // Flatten to string to display
-        const output = events.reduce(
-            (str, event) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
-            'Events:\n');
-        document.getElementById('content').innerText = output;
       }
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
