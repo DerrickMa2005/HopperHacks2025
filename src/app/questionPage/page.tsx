@@ -23,8 +23,8 @@ export default function QuestionPage() {
                     "Content-Type": 'application/json'
                 },
                 body: JSON.stringify({"theme": chatgptInput, 
-                    "category": localStorage.getItem("category"), "perk": localStorage.getItem("perk"), 
-                    "Time Period": localStorage.getItem("timePeriod")})
+                    "category": localStorage.getItem("category") || "", "perk": localStorage.getItem("perk") || "", 
+                    "Time Period": localStorage.getItem("timePeriod") || ""})
             },   
             )
             const payload = await response.json();

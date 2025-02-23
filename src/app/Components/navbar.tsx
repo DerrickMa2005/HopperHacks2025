@@ -7,7 +7,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
-import { auto } from 'openai/_shims/registry.mjs';
 
 
 export function Navbar() {

@@ -1,11 +1,12 @@
 'use client'
 import Image from 'next/image';
-import Link from 'next/link';
 import { Modal, Button } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import LinkIcon from '@mui/icons-material/Link';
-import { useState, useEffect } from 'react';
+import Placeholder from '../Assets/placeholder.png';
+import { useEffect } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // Declare gapi as a global variable
 declare const gapi: {
@@ -125,15 +126,25 @@ export default function EventPopUp({
         alert("Failed to integrate with Google Calendar. Check the console for details.");
       }
     }
-  
+      const buttontheme = createTheme({
+        palette: {
+          primary: {
+            main: '#686868',
+          },
+          secondary: {
+            main: '#00ff00',
+          },
+        },
+      });
     return (
       <Modal
         open={open}
         onClose={() => handleOpen(false)}
+        className='mb-10'
       >
         <div className='bg-green-200 w-[90%] h-[80%] absolute top-1/2 left-1/2 
           transform -translate-x-1/2 -translate-y-1/2 
-          flex flex-col gap-8 items-start rounded-md p-4'
+          flex flex-col gap-8 items-start rounded-md p-4 mb-10'
         >
           {/* Close button */}
           <div className='flex flex-row justify-end w-full mb-2'>
@@ -143,21 +154,32 @@ export default function EventPopUp({
           </div>
   
           {/* Title, date, and time */}
-          <h2 className='underline'>{event.title}</h2>
-          <p>Date: {getDate(event.start)}</p>
-          <p>Time: {getTime(event.start)} - {getTime(event.end)}</p>
-          <p>Location: {event.location}</p>
+          <div className='flex flex-row justify-between gap-4 w-full h-[35%]'>
+            <div className='flex flex-col flex-start items-start overflow-hidden'>
+                <h2 className='underline'>{event.title}</h2>
+                <p>Date: {getDate(event.start)}</p>
+                <p>Time: {getTime(event.start)} - {getTime(event.end)}</p>
+                <p>Location: {event.location}</p>
+            </div>
+            <Image
+              src={!event.image ? Placeholder : event.image}
+              unoptimized
+              width={350}
+              height={300}
+              alt={event.title}/>
+          </div>
           <p>{event.description}</p>
-  
           {/* Buttons row */}
+          <ThemeProvider theme={buttontheme}>
           <div className="flex flex-row gap-4 justify-around w-full mt-4">
             <Button variant="contained" onClick={handleCalendarIntegration}>
               <CalendarMonthOutlinedIcon fontSize="inherit" />
             </Button>
-            <Link href={event.link || "#"} target="_blank">
+            <Button variant="contained" href={event.link || "#"} target="_blank">
               <LinkIcon fontSize="inherit" />
-            </Link>
+            </Button>
           </div>
+          </ThemeProvider>
         </div>
       </Modal>
     );
@@ -184,7 +206,7 @@ export default function EventPopUp({
                                 <p>{event.location}</p>
                             </div>
                             <Image
-                                    src= {!event.image ? DancingRoach : event.image}
+                                    src= {!event.image ? Placeholder : event.image}
                                     unoptimized
                                     width={300}
                                     height={200}
