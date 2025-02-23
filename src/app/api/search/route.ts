@@ -10,7 +10,30 @@ const index = pinecone.Index(indexName);
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const query = `Search for events with theme: ${body.theme}, category: ${body.category}, perk: ${body.perk}`;
+  const query = body.theme;
+  const filter: Record<string, any> = {};
+  
+  if (body.perk) {
+    if (body.perk == "Free Food")
+      filter["perks"] = { "$in": ["Free Food, Credit", "Free Food, Free Stuff, Credit"] };
+    else if (body.perk == "Free Stuff")
+      filter["perks"] = { "$in": ["Free Stuff, Credit", "Free Food, Free Stuff, Credit"] };
+    else
+      return new Response(JSON.stringify({ error: "Incorrect perk" }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+  }
+  
+  if (body.start_after)
+    filter["start"] = { "$gte": body.start_after }
+  if (body.end_before)
+    filter["end"] = { "$lte": body.end_before }
+  if (body.main_host)
+    filter["main_host"] = { "$eq": body.main_host }
+  if (body.category)
+    filter["categories"] = { "$eq": body.category }
+
   try {
     // Generate vector embedding using OpenAI
     const response = await openai.embeddings.create({
@@ -23,13 +46,14 @@ export async function POST(req: NextRequest) {
       vector,
       topK: 10,
       includeMetadata: true,
+      filter: (Object.keys(filter).length > 0) ? filter : undefined
     });
-    return NextResponse.json({data: searchResults.matches.map((match) => match.metadata)});
+    return NextResponse.json({ data: searchResults.matches.map((match) => match.metadata) });
   } catch (error) {
     console.error(error);
 
     // Return 500 if there's an error during the process
-    return new Response(JSON.stringify({ error: `Internal server error: ${error}`}), {
+    return new Response(JSON.stringify({ error: `Internal server error: ${error}` }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
