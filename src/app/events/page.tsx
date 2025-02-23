@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@mui/material';
 import { Navbar } from '../Components/navbar';
+import EventTab from '../Components/eventTab';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 export default function Events(){
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,22 +25,30 @@ export default function Events(){
             }
         })
     }
+    const buttontheme = createTheme({
+            palette: {
+            primary: {
+                main: '#686868',
+            },
+            secondary: {
+                main: '#00ff00',
+            },
+            },
+        });
     return(
-        <div>
-        <Navbar/>
-        <div className = 'flex flex-col items-center mt-12 gap-8'>
-            <h1 className = 'text-4xl'>Your Recommended Events</h1>
-            <div className = 'flex flex-col items-center rounded-md gap-8 w-4/12'>
-            {eventList.map((e:Record<string,string>) => <div key = {e.title} className = 'flex flex-col border-2 border-black rounded-md p-4 border-solid items-center gap-4'>
-                <a className = 'text-sky-600' href={e.link} target="_blank">{e.title}</a>
-                <h1>{e.date}</h1>
-                <h1>{e.description}</h1>
-                <h1>{e.location}</h1>
-                {e.organizer === 'N/A' ? null: <h1>{e.organizer}</h1>}
-            </div>)}
+        <div className='mb-15 h-screen w-screen'>
+            <Navbar/>
+            <div className = 'flex flex-col items-center mt-12 gap-8'>
+                <h1 className = 'text-4xl'>Your Recommended Events</h1>
+                <div className = 'flex flex-col items-center rounded-md gap-8 w-3/4'>
+                {eventList.length === 0 ? <div>Try Adjusting your preferences to see more events.
+
+                </div>:eventList.map((e:Record<string,string>) => <EventTab key={e.title} event={e}/>)}
+                </div>
+                <ThemeProvider theme={buttontheme}>
+                    <Button variant = 'contained' onClick = {() => router.push('/questionPage')}>Didn't see anything you like?</Button>
+                </ThemeProvider>
             </div>
-            <Button variant = 'contained' onClick = {() => token ? router.push('/completionPage'): null}>{token ? "Transfer Events": "Log in or register"}</Button>
-        </div>
         </div>
     )
 }
