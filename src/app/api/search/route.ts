@@ -3,8 +3,8 @@ import { Pinecone } from "@pinecone-database/pinecone";
 import OpenAI from "openai";
 
 // Initialize API clients once
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY as string });
-const pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string });
+const openai = new OpenAI({ apiKey: "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" });
+const pinecone = new Pinecone({ apiKey: "pcsk_zmS66_CbWKciC7KR7caQZDdVd2vwpSnqcpJuEFsZ175E169CVzjhNgtBZt5LzMqf1YuCr" });
 const indexName = "events-index";
 const index = pinecone.Index(indexName);
 
