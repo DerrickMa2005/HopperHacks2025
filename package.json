@@ -22,15 +22,15 @@
     "@supabase/ui": "^0.36.5",
     "cookie": "^1.0.2",
     "framer-motion": "^12.4.7",
+    "google-one-tap": "^1.0.6",
     "googleapis": "^144.0.0",
     "jwt-decode": "^4.0.0",
-    "framer-motion": "^12.4.7",
-    "google-one-tap": "^1.0.6",
     "next": "15.1.7",
     "openai": "^4.85.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-font": "^1.2.1",
+    "react-markdown": "^10.0.0",
     "reactjs-popup": "^2.0.6"
   },
   "devDependencies": {

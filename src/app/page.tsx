@@ -82,7 +82,7 @@ scope: "https://www.googleapis.com/auth/calendar.events"
         </div>
         <ThemeProvider theme={buttontheme}>
             <div className='flex flex-row gap-4 justify-end items-center'>
-          {user ? <Image onClick = {() =>{
+          {user ? <Image className="rounded-xl border-black border-4" onClick = {() =>{
             logout();
           } } src = {userPicture} alt='' width = "50" height = "50"></Image>:<Button variant='contained' size="medium" onClick={() => login()}>Sign In</Button>}
             </div>
