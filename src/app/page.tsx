@@ -93,7 +93,6 @@ scope: "https://www.googleapis.com/auth/calendar.events"
             <h1>Looking to get out of your dorm but keep missing club events?</h1>
             <h1>Not sure what events campus has to offer?</h1>
           </div>
-          <h1>{user}</h1>
           <div className='flex flex-row gap-4 items-center justify-center'>
             <p className='text-5xl'>Introducing</p>
             <div className='flex flex-row flex-start items-center gap-2'> 
