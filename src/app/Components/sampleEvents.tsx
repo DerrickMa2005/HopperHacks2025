@@ -24,7 +24,6 @@ async function getData() {
 export default function SampleEventWheel() {
   const [events, setEvents] = useState<any[]>([]);
   const x = useMotionValue(0);
-  let pos = x.get();
   useEffect(() => {
     getData().then(event => setEvents(event));
   },[]);

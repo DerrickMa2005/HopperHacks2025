@@ -4,6 +4,7 @@ import Font from 'react-font';
 import { useRouter } from 'next/navigation';
 import SampleEventWheel from './Components/sampleEvents';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import HomeIcon from '@mui/icons-material/Home';
 
 
 
@@ -23,12 +24,17 @@ export default function Home() {
   return (
 
     <div className="mb-12">
-      <ThemeProvider theme={buttontheme}>
-        <div className='bg-green-400 flex justify-end p-4 gap-4 border-black border-b-4'>
-          <Button variant='contained' size="medium" onClick={() => router.push("/signin")}>Sign In</Button>
-          <Button variant='contained' size="medium" onClick={() => router.push('/signup')}>Sign Up</Button>
+      <div className='bg-green-400 flex p-4 border-black border-b-4 items-center justify-between'>
+        <div className='flex gap-4 items-center margin-100'>
+          <HomeIcon fontSize='large'></HomeIcon>
         </div>
-      </ThemeProvider>
+        <ThemeProvider theme={buttontheme}>
+            <div className='flex gap-4 justify-end items-center'>
+                <Button variant='contained' size="medium" onClick={() => router.push("/signin")}>Sign In</Button>
+                <Button variant='contained' size="medium" onClick={() => router.push('/signup')}>Sign Up</Button>
+            </div>
+        </ThemeProvider>
+    </div>
       <Font family="Funnel Sans">
         <div className='text-4xl flex flex-col gap-16 items-center mt-10'>
           <div className='flex flex-col gap-10 items-center'>
