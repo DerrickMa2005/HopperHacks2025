@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 export default function Events(){
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const events = JSON.parse(localStorage.getItem("events") || "");
     return(
         <Font family="Funnel Sans">
         <div className = 'flex flex-col items-center mt-24 gap-8'>
