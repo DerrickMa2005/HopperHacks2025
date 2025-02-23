@@ -19,15 +19,23 @@ export default function QuestionPage() {
     const perks = ["Credit", "Free Food", "Free Stuff"];
     const timePeriods = ["12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00", "6:00 - 8:00", "8:00 - 10:00"];
     const handleSubmit = async () =>{
-        const response = await fetch('/api/search', {
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({"theme": theme, "category": category, "perk": perk, "Time Period": timePeriod})
-        },   
-        )
-        router.push('/events');
+        try{
+            const response = await fetch('/api/search', {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify({"theme": theme, "category": category, "perk": perk, "Time Period": timePeriod})
+            },   
+            )
+            const payload = await response.json();
+            const data = JSON.stringify(payload.data);
+            localStorage.setItem("events", data);
+            router.push('/events');
+        }
+        catch(error){
+            console.log(error);
+        }
     };
     const buttontheme = createTheme({
         palette: {
