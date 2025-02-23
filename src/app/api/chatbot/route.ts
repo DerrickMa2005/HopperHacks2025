@@ -5,7 +5,7 @@ import OpenAI from "openai";
 // Initialize API clients once
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY as string });
 const pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string });
-const indexName = "events-index";
+const indexName = "events-index2";
 const index = pinecone.Index(indexName);
 
 export async function POST(req: NextRequest) {

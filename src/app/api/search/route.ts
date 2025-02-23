@@ -2,10 +2,28 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from "@pinecone-database/pinecone";
 import OpenAI from "openai";
 
+function convertToMinutes(timeRange : string) {
+  // Split the time range into start and end times
+  const [startTime, endTime] = timeRange.split('-');
+  
+  // Helper function to convert time to minutes since midnight
+  function timeToMinutes(time : string) {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  // Convert both start and end times to minutes
+  const startMinutes = timeToMinutes(startTime);
+  const endMinutes = timeToMinutes(endTime);
+
+  // Return an array with start and end times in minutes
+  return [ startMinutes, endMinutes ];
+}
+
 // Initialize API clients once
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY as string });
 const pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string });
-const indexName = "events-index";
+const indexName = "events-index2";
 const index = pinecone.Index(indexName);
 
 export async function POST(req: NextRequest) {
@@ -21,6 +39,7 @@ export async function POST(req: NextRequest) {
       filter["perks"] = { "$in": ["Free Stuff, Credit", "Free Food, Free Stuff, Credit"] };
   }
   
+  console.log(body);
   if (body.start_after)
     filter["start"] = { "$gte": body.start_after }
   if (body.end_before)
@@ -29,6 +48,12 @@ export async function POST(req: NextRequest) {
     filter["main_host"] = { "$eq": body.main_host }
   if (body.category)
     filter["categories"] = { "$eq": body.category }
+  console.log(body.time);
+  if (body.time) {
+    const [start, end] = convertToMinutes(body.time);
+    filter["start_day_time"] = { "$gte": start }
+    filter["end_day_time"] = { "$lte": end }
+  }
 
   try {
     // Generate vector embedding using OpenAI
