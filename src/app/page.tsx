@@ -59,7 +59,7 @@ export default function Home() {
       const data = await response.json();
       setUser(data.email);
       setUserPicture(data.picture);
-
+      localStorage.setItem("email", data.email);
       }
       catch(error){
         console.log(error);
