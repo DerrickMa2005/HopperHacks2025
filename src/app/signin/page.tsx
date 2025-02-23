@@ -6,7 +6,6 @@ export default function SignIn() {
     const supabase = createClient('https://cvgvsplspmhoomurnsmy.supabase.co/', '<INSERT PROJECT ANON API KEY>')
     const App = () => <Auth supabaseClient={supabase} providers={['google']} appearance={{
         theme: ThemeSupa,
-
     }} />
     return (
         <div className='mt-40 max-w-lg m-auto'>
