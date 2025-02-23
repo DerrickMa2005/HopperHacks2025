@@ -51,7 +51,9 @@ export default function Home() {
           </div>
           <div className = 'flex-col gap-8 items-center flex'>
             <h1>Current Events:</h1>
+            <div className = 'w-screen'>
               <SampleEventWheel />
+              </div>
             </div>
             <ThemeProvider theme={buttontheme}>
           <Button className={"hover:drop-shadow-lg ease-in duration-300"} variant='contained' size="large">Find Tailored Events</Button>
