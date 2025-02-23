@@ -97,7 +97,7 @@ scope: "https://www.googleapis.com/auth/calendar.events"
           <h1>{user}</h1>
           <div className='flex flex-row gap-4 items-center justify-center'>
             <p className='text-5xl'>Introducing</p>
-            <p className='text-5xl underline hover:text-7xl ease-out duration-300'>SBU-FOMO NOMO</p>
+            <p className='text-5xl underline hover:text-7xl ease-out duration-300'>SBU-GOMO</p>
           </div>
           <div className='flex gap-8'>
             <div className='border-solid border-black border-2 p-4 rounded-md flex flex-col gap-4 max-w-lg bg-red-200'>
