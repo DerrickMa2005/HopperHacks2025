@@ -5,11 +5,16 @@ import Placeholder from '../Assets/placeholder.png';
 
 export default function EventTab({event} : {event: Record<string,string>}) {
     const [isOpen, setIsOpen] = useState(false);
-    const getTime = (date : string) => {
+    const getTime = (date: string) => {
         var d = new Date(Number(date) * 1000);
-        return (d.getHours() > 12 ? d.getHours() - 12 : d.getHours()) + ":" + 
-        d.getMinutes() + (d.getMinutes() < 10 ? "0" : "") + " " + (d.getHours() > 12 ? "PM" : "AM");
+        let hours = d.getHours();
+        let period = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12; // Converts 13-23 hours to 1-11
+        hours = hours ? hours : 12; // Handles midnight (0 hours) as 12
+        let minutes = d.getMinutes();
+        return hours + ":" + (minutes < 10 ? "0" + minutes : minutes) + " " + period;
     }
+    
     const getDate = (date : string) => {
         var d = new Date(Number(date) * 1000);
         return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();

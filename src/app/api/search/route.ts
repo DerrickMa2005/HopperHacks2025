@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
       filter["perks"] = { "$in": ["Free Stuff, Credit", "Free Food, Free Stuff, Credit"] };
   }
   
+  console.log(body);
   if (body.start_after)
     filter["start"] = { "$gte": body.start_after }
   if (body.end_before)
@@ -47,10 +48,9 @@ export async function POST(req: NextRequest) {
     filter["main_host"] = { "$eq": body.main_host }
   if (body.category)
     filter["categories"] = { "$eq": body.category }
+  console.log(body.time);
   if (body.time) {
     const [start, end] = convertToMinutes(body.time);
-    console.log(start);
-    console.log(end);
     filter["start_day_time"] = { "$gte": start }
     filter["end_day_time"] = { "$lte": end }
   }
