@@ -13,7 +13,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.5",
     "@supabase/supabase-js": "^2.48.1",
-    "embla-carousel-react": "^8.5.2",
+    "framer-motion": "^12.4.7",
     "@pinecone-database/pinecone": "^5.0.2",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
