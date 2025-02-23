@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <GoogleOAuthProvider clientId = "727905432505-vb3p80ouu604f5lor4p1na2laj0k90u7.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId = "999021691122-9cgnoel0l7rnpe81mg1armk9smj9j5eo.apps.googleusercontent.com">
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

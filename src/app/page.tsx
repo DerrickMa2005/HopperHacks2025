@@ -64,8 +64,10 @@ export default function Home() {
       catch(error){
         console.log(error);
       }
-      
-  }});
+
+  },
+scope: "https://www.googleapis.com/auth/calendar.events"
+});
   const logout = () => {
     googleLogout();
     localStorage.clear();
