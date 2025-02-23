@@ -2,14 +2,21 @@
 import { Button } from '@mui/material';
 import Font from 'react-font';
 import { useRouter } from 'next/navigation';
+import {createClient} from '@supabase/supabase-js';
 
 export default function Home() {
   const router = useRouter();
+  const supabase = createClient('https://cvgvsplspmhoomurnsmy.supabase.co/', process.env.SUPABASE_API_KEY ? process.env.SUPABASE_API_KEY : "1");
+  const signInWithGoogle = async() => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+  }
   return (
     <div>
       <div className='flex justify-end mt-6 mr-4 gap-4'>
-        <Button variant='outlined' size="medium" onClick={() => router.push("/signin")}>Sign In</Button>
-        <Button variant='outlined' size="medium" onClick={() => router.push('/signup')}>Sign Up</Button>
+        <Button variant='outlined' size="medium" onClick={signInWithGoogle}>Sign In</Button>
+        <Button variant='outlined' size="medium" onClick={() => null}>Sign Up</Button>
       </div>
       <Font family="Funnel Sans">
         <div className='text-4xl flex flex-col gap-16 items-center mt-24'>
