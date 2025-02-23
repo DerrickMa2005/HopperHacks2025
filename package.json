@@ -23,12 +23,12 @@
     "framer-motion": "^12.4.7",
     "googleapis": "^144.0.0",
     "jwt-decode": "^4.0.0",
-    "framer-motion": "^12.4.7",
     "next": "15.1.7",
     "openai": "^4.85.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-font": "^1.2.1"
+    "react-font": "^1.2.1",
+    "react-markdown": "^10.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
