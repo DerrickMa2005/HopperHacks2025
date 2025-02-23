@@ -12,7 +12,7 @@ export default function EventTab({event} : {event: Record<string,string>}) {
     }
     const getDate = (date : string) => {
         var d = new Date(Number(date) * 1000);
-        return d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+        return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
     }
     return (
             <div className = 'flex flex-col items-center rounded-md gap-8 w-[100%]'>

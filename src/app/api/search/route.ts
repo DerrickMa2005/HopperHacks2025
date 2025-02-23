@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       model: "text-embedding-3-small",
       input: query,
     });
+    console.log(filter);
     const vector = response.data[0].embedding;
     // Query Pinecone with the generated vector
     const searchResults = await index.query({

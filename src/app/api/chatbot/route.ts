@@ -12,19 +12,13 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const query = body.theme;
   const filter: Record<string, any> = {};
-  
-  // console.log(index);
-  
+
+  const topK = body.topK || 10;
   if (body.perk) {
     if (body.perk == "Free Food")
       filter["perks"] = { "$in": ["Free Food, Credit", "Free Food, Free Stuff, Credit"] };
     else if (body.perk == "Free Stuff")
       filter["perks"] = { "$in": ["Free Stuff, Credit", "Free Food, Free Stuff, Credit"] };
-    else
-      return new Response(JSON.stringify({ error: "Incorrect perk" }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
   }
   
   if (body.start_after)
@@ -46,11 +40,18 @@ export async function POST(req: NextRequest) {
     // Query Pinecone with the generated vector
     const searchResults = await index.query({
       vector,
-      topK: 10,
+      topK: topK,
       includeMetadata: true,
       filter: (Object.keys(filter).length > 0) ? filter : undefined
     });
-    return NextResponse.json({ data: searchResults.matches.map((match) => match.metadata) });
+    const completion = openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {"role": "developer", "content": "User will give you a question and a RAG system will give you relevant events to that question. Tell them what events are relevant, and let them know if nothing was found."},
+          {"role": "user", "content": `context: ${JSON.stringify(searchResults)}\n\nNow, answer this question: ${query}`}
+        ]
+  })
+    return NextResponse.json({ data: (await completion).choices[0].message.content });
   } catch (error) {
     console.error(error);
 

@@ -8,9 +8,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import Image from 'next/image';
 import { googleLogout } from '@react-oauth/google';
 import HomeIcon from '@mui/icons-material/Home';
-
-
-
+import Chatbot from './Components/chatbot';
 
 export default function Home() {
   const buttontheme = createTheme({
@@ -51,8 +49,8 @@ export default function Home() {
     onSuccess: async (tokenResponse) => {
       const token = tokenResponse.access_token;
       localStorage.setItem("token", token);
-      try{
-        const response = await fetch("https://www.googleapis.com/oauth2/v2/userinfo",{
+      try {
+        const response = await fetch("https://www.googleapis.com/oauth2/v2/userinfo", {
           method: "GET",
           headers: {"Authorization": `Bearer ${token}`}
       });
@@ -61,7 +59,7 @@ export default function Home() {
       setUserPicture(data.picture);
       localStorage.setItem("email", data.email);
       }
-      catch(error){
+      catch (error) {
         console.log(error);
       }
 
@@ -88,7 +86,7 @@ scope: "https://www.googleapis.com/auth/calendar.events"
             logout();
           } } src = {userPicture} alt='' width = "50" height = "50"></Image>:<Button variant='contained' size="medium" onClick={() => login()}>Sign In</Button>}
             </div>
-        </ThemeProvider>
+          </ThemeProvider>
         </div>
       <div className='flex p-4 items-center justify-between'>
         <div className='text-4xl flex flex-col gap-16 items-center mt-10'>
@@ -126,6 +124,7 @@ scope: "https://www.googleapis.com/auth/calendar.events"
         </div>
       </div >
     </div>
+    <Chatbot />
     </div>
   );
 }
