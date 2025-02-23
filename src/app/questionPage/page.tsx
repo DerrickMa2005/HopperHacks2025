@@ -24,7 +24,7 @@ export default function QuestionPage() {
                 },
                 body: JSON.stringify({"theme": chatgptInput, 
                     "category": localStorage.getItem("category") || "", "perk": localStorage.getItem("perk") || "", 
-                    "Time Period": localStorage.getItem("timePeriod") || ""})
+                    "time": localStorage.getItem("time") || ""})
             },   
             )
             const payload = await response.json();
