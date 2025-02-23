@@ -12,13 +12,19 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const query = body.theme;
   const filter: Record<string, any> = {};
-
-  const topK = body.topK || 10;
+  
+  // console.log(index);
+  
   if (body.perk) {
     if (body.perk == "Free Food")
       filter["perks"] = { "$in": ["Free Food, Credit", "Free Food, Free Stuff, Credit"] };
     else if (body.perk == "Free Stuff")
       filter["perks"] = { "$in": ["Free Stuff, Credit", "Free Food, Free Stuff, Credit"] };
+    else
+      return new Response(JSON.stringify({ error: "Incorrect perk" }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
   }
   
   if (body.start_after)
@@ -40,7 +46,7 @@ export async function POST(req: NextRequest) {
     // Query Pinecone with the generated vector
     const searchResults = await index.query({
       vector,
-      topK: topK,
+      topK: 10,
       includeMetadata: true,
       filter: (Object.keys(filter).length > 0) ? filter : undefined
     });
