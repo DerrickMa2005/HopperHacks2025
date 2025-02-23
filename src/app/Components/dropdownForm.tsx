@@ -18,8 +18,8 @@ export default function DropdownForm({open, handleOpen} : {open : boolean,
             },
         });
         const [category, setCategory] = useState("");
-        const [startTime, setStartTime] = useState("");
-        const [endTime, setEndTime] = useState("");
+        const [startTime, setStartTime] = useState("12:00");
+        const [endTime, setEndTime] = useState("12:00");
         const [perk, setPerk] = useState("");
         const [startWrong, setStartError] = useState(false);
         const [endWrong, setEndError] = useState(false);
