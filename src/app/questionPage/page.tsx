@@ -4,6 +4,7 @@ import { Button, FormControl, MenuItem, Select, InputLabel, SelectChangeEvent } 
 import { useRouter } from 'next/navigation';
 import Font from 'react-font';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {Navbar} from '../Components/navbar';
 export default function QuestionPage() {
     const [category, setCategory] = useState("");
     const [theme, setTheme] = useState("");
@@ -39,37 +40,32 @@ export default function QuestionPage() {
         },
     });
     return (
-        <div className="mb-12">
-        <ThemeProvider theme={buttontheme}>
-                <div className='bg-green-400 flex justify-end p-4 gap-4 border-black border-b-4'>
-                  <Button variant='contained' size="medium" onClick={() => router.push("/signin")}>Sign In</Button>
-                  <Button variant='contained' size="medium" onClick={() => router.push('/signup')}>Sign Up</Button>
-                </div>
-              </ThemeProvider>
+    <div className="mb-8">
+        <Navbar />
         <Font family="Funnel Sans">
             <div className='flex flex-col mt-24 items-center gap-8'>
-                <h1 className='text-3xl mb-12'>Please select your event preferences.</h1>
-                <FormControl className='w-1/12'>
+                <h1 className='text-3xl mb-6'>Please select your event preferences.</h1>
+                <FormControl className='w-1/6'>
                     <InputLabel>Theme</InputLabel>
-                    <Select value={theme} onChange={(event: SelectChangeEvent) => setTheme(event.target.value)}>{themes.map((e) => <MenuItem key={e} value={e}>{e}</MenuItem>)}</Select>
+                    <Select label="Theme" value={theme} onChange={(event: SelectChangeEvent) => setTheme(event.target.value)}>{themes.map((e) => <MenuItem key={e} value={e}>{e}</MenuItem>)}</Select>
                 </FormControl>
-                <FormControl className='w-1/12'>
+                <FormControl className='w-1/6'>
                     <InputLabel>Category</InputLabel>
-                    <Select value={category} MenuProps={{PaperProps:{style:{maxHeight: 200, overflowY:"auto"}}}} onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}>{categories.map((e) => <MenuItem key={e} value={e}>{e}</MenuItem>)}</Select>
+                    <Select label="Category" value={category} MenuProps={{PaperProps:{style:{maxHeight: 200, overflowY:"auto"}}}} onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}>{categories.map((e) => <MenuItem key={e} value={e}>{e}</MenuItem>)}</Select>
                 </FormControl>
-                <FormControl className='w-1/12'>
+                <FormControl className='w-1/6'>
                     <InputLabel>Perks</InputLabel>
-                    <Select value={perk} onChange={(event: SelectChangeEvent) => setPerk(event.target.value)}>{perks.map((e) => <MenuItem key={e} value={e}>{e}</MenuItem>)}</Select>
+                    <Select label="Perks" value={perk} onChange={(event: SelectChangeEvent) => setPerk(event.target.value)}>{perks.map((e) => <MenuItem key={e} value={e}>{e}</MenuItem>)}</Select>
                 </FormControl>
-                <FormControl className='w-1/12'>
+                <FormControl className='w-1/6'>
                 <InputLabel>Event Time</InputLabel>
-                <Select value = {timePeriod} onChange={(event: SelectChangeEvent) => setTimePeriod(event.target.value)}>{timePeriods.map((e) => <MenuItem key = {e} value = {e}>{e}</MenuItem>)}</Select>
+                <Select label="Event Time" value = {timePeriod} onChange={(event: SelectChangeEvent) => setTimePeriod(event.target.value)}>{timePeriods.map((e) => <MenuItem key = {e} value = {e}>{e}</MenuItem>)}</Select>
                 </FormControl>
                 <ThemeProvider theme={buttontheme}>
-                    <Button variant='contained' size='medium' onClick={handleSubmit}>Recommend Events</Button>
+                    <Button variant='contained' size='medium' onClick={handleSubmit}>Show Me My Events</Button>
                 </ThemeProvider>
             </div>
         </Font>
-        </div>
+    </div>
     )
 }
