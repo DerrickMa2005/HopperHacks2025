@@ -1,8 +1,7 @@
 import {useEffect, useState} from 'react';
+import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
-import {motion, useScroll, useTransform} from 'framer-motion';
-import { useRef } from 'react';
-import { section } from 'framer-motion/client';
+import {motion} from 'framer-motion';
 
 
 const supabaseUrl = 'https://cvgvsplspmhoomurnsmy.supabase.co/';
@@ -15,7 +14,7 @@ async function getData() {
     return [];
   }
   let events = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 6; i++) {
     const randomIndex = Math.floor(Math.random() * data.length);
     events.push(data[randomIndex]);
   }
@@ -28,17 +27,20 @@ export default function SampleEventWheel() {
     getData().then(event => setEvents(event));
   },[]);
   return (
-  <div  className = 'flex flex-direction-row gap-8'>
+  <div className = 'overflow-hidden w-screen'>
+  <motion.div animate={{ x: ["0%", "-50%"] }}
+  transition={{ repeat: Infinity, duration: 10, ease: "linear" }} className = 'flex flex-direction-row gap-8 w-[200%]'>
   {events.map((event, index) => ( event ?
-    (<div className = 'h-40 w-72 border-solid border-black border-2 p-4 rounded-md flex flex-col gap-4 max-w-lg bg-red-200' key={index}>
+    (<Link className = "w-[100%]" target="_blank" href={event.link}  key={index}>
+      <div className = 'h-40 w-lg border-solid border-black border-2 p-4 rounded-md flex flex-col gap-4 max-w-lg bg-red-200 overflow-hidden'>
       <p className = 'underline text-sm'>{event.title.split(" ").length < 10 ? event.title
       : event.title.split(" ").slice(0, 10).join(" ") + ". . ."}</p>
-      <p className = 'text-xs'>{event.description.split(" ").length < 25 ? event.description 
-      : event.description.split(" ").slice(0, 25).join(" ") + ". . ."}</p>
-    </div>)
+      <p className = 'text-xs mb-8'>{event.description}</p>
+    </div></Link>)
     : <div>
       <p className = 'underline text-sm'>No events available</p>
     </div>
   ))}
+  </motion.div>
   </div>);
 }
