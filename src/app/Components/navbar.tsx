@@ -58,6 +58,7 @@ export function Navbar() {
       });
       const data = await response.json();
       setUser(data.email);
+      localStorage.setItem("email", data.email);
       setUserPicture(data.picture);
 
       }
