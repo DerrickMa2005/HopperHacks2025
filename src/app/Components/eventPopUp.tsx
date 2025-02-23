@@ -4,6 +4,7 @@ import { Modal } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import LinkIcon from '@mui/icons-material/Link';
+import DancingRoach from '../Assets/dancingroach.gif';
 
 export default function EventPopUp({event, open, handleOpen} : {event: Record<string,string>, 
     open: boolean, handleOpen: (open: boolean) => void}) {
@@ -25,7 +26,7 @@ export default function EventPopUp({event, open, handleOpen} : {event: Record<st
                             <button  onClick={() => handleOpen(false)}>
                                 <HighlightOffOutlinedIcon fontSize='large' /></button>
                         </div>
-                        <div className='flex flex-row justify-between gap-4 w-[100%]'>
+                        <div className='flex flex-row justify-between gap-4 w-[100%] h-[50%]'>
                             <div className = 'flex flex-col flex-start items-start overflow-hidden'>
                                 <h1 className="underline">{event.title}</h1>
                                 <p>Hosted by: {event.main_host}</p>
@@ -37,7 +38,7 @@ export default function EventPopUp({event, open, handleOpen} : {event: Record<st
                                 <p>{event.location}</p>
                             </div>
                             <Image
-                                    src= {event.image}
+                                    src= {!event.image ? DancingRoach : event.image}
                                     unoptimized
                                     width={300}
                                     height={200}
