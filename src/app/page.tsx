@@ -26,6 +26,27 @@ export default function Home() {
   const [user, setUser] = useState("");
   const [userPicture, setUserPicture] = useState("");
   const router = useRouter();
+  useEffect(() => {
+    autoLogin();
+  }, []);
+  const autoLogin = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        try{
+            const response = await fetch("https://www.googleapis.com/oauth2/v2/userinfo",{
+            method: "GET",
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+        const data = await response.json();
+        setUser(data.email);
+        setUserPicture(data.picture);
+
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+  }
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const token = tokenResponse.access_token;
@@ -45,27 +66,29 @@ export default function Home() {
       }
       
   }});
+  const logout = () => {
+    googleLogout();
+    localStorage.clear();
+    setUser("");
+    setUserPicture("");
+  }
   return (
 
-    <div className="mb-12 w-screen h-screen">
+    <div className="mb-15 w-screen h-screen">
         <div className='text-4xl flex flex-col items-center'>
-        <div className='flex flex-row gap-10 items-center justify-between border-black border-b-2 w-screen p-4'>
+        <div className='bg-green-400 flex flex-row gap-10 items-center justify-between border-black border-b-2 w-screen p-4'>
         <div className='flex gap-4 items-center'>
           <HomeIcon fontSize='large'></HomeIcon>
         </div>
         <ThemeProvider theme={buttontheme}>
             <div className='flex flex-row gap-4 justify-end items-center'>
           {user ? <Image onClick = {() =>{
-            googleLogout();
-            localStorage.clear();
-            setUser("");
-            setUserPicture("");
+            logout();
           } } src = {userPicture} alt='' width = "50" height = "50"></Image>:<Button variant='contained' size="medium" onClick={() => login()}>Sign In</Button>}
-          {user ? null:<Button variant='contained' size="medium" onClick={() => login()}>Sign Up</Button>}
             </div>
         </ThemeProvider>
         </div>
-      <div className='bg-green-400 flex p-4 items-center justify-between'>
+      <div className='flex p-4 items-center justify-between'>
         <div className='text-4xl flex flex-col gap-16 items-center mt-10'>
           <div className='flex flex-col gap-10 items-center'>
             <h1>Looking to get out of your dorm but keep missing club events?</h1>
