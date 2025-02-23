@@ -24,8 +24,7 @@ export async function POST(req: NextRequest) {
       topK: 10,
       includeMetadata: true,
     });
-    searchResults.matches.forEach((match) => console.log(match.metadata));
-    return NextResponse.json({data: searchResults.matches.forEach((match) => match.metadata)});
+    return NextResponse.json({data: searchResults.matches.map((match) => match.metadata)});
   } catch (error) {
     console.error(error);
 
