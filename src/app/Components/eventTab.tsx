@@ -31,7 +31,7 @@ export default function EventTab({event} : {event: Record<string,string>}) {
                         unoptimized
                         width={300}
                         height={200}
-                        alt="Picture of the author"
+                        alt={event.title}
                         />
                 </button>
             <EventPopUp event={event} open={isOpen} handleOpen={setIsOpen}/>

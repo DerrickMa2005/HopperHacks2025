@@ -47,8 +47,9 @@ export default function QuestionPage() {
         },
     });
     return (
+        <div className='flex flex-col w-screen'>
+            <Navbar />
             <div className='flex flex-col mt-24 items-center gap-8'>
-                <Navbar/>
                 <h1 className='text-3xl mb-6'>Please select your event preferences.</h1>
                 <FormControl className='w-1/6'>
                     <InputLabel>Theme</InputLabel>
@@ -70,6 +71,6 @@ export default function QuestionPage() {
                     <Button variant='contained' size='medium' onClick={handleSubmit}>Show Me My Events</Button>
                 </ThemeProvider>
             </div>
-
+        </div>
     )
 }
