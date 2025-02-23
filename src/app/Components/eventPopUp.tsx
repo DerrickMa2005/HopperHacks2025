@@ -4,7 +4,7 @@ import { Modal } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import LinkIcon from '@mui/icons-material/Link';
-import DancingRoach from '../Assets/dancingroach.gif';
+import Placeholder from '../Assets/placeholder.png';
 
 export default function EventPopUp({event, open, handleOpen} : {event: Record<string,string>, 
     open: boolean, handleOpen: (open: boolean) => void}) {
@@ -38,7 +38,7 @@ export default function EventPopUp({event, open, handleOpen} : {event: Record<st
                                 <p>{event.location}</p>
                             </div>
                             <Image
-                                    src= {!event.image ? DancingRoach : event.image}
+                                    src= {!event.image ? Placeholder : event.image}
                                     unoptimized
                                     width={300}
                                     height={200}

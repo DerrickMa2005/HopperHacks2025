@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useState } from 'react';
 import EventPopUp from './eventPopUp';
-import DancingRoach from '../Assets/dancingroach.gif';
+import Placeholder from '../Assets/placeholder.png';
 
 export default function EventTab({event} : {event: Record<string,string>}) {
     const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function EventTab({event} : {event: Record<string,string>}) {
                         <p>{event.location}</p>
                     </div>
                     <Image
-                        src= {!event.image ? DancingRoach : event.image}
+                        src= {!event.image ? Placeholder : event.image}
                         unoptimized
                         width={300}
                         height={200}
