@@ -7,24 +7,12 @@ import EventTab from '../Components/eventTab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 export default function Events(){
     const router = useRouter();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [token, setToken] = useState("");
     const [eventList, setEventList] = useState<Record<string,string>[]>([]);
     useEffect(() => {
-        setToken(localStorage.getItem("token") || "");
         setEventList(JSON.parse(localStorage.getItem("events") || "[]"));
 
     }, []);
   
-
-    const handleButton = async () => {
-        const response = await fetch("",{
-            method: 'GET',
-            headers: {
-                
-            }
-        })
-    }
     const buttontheme = createTheme({
             palette: {
             primary: {
@@ -46,7 +34,7 @@ export default function Events(){
                 </div>:eventList.map((e:Record<string,string>) => <EventTab key={e.title} event={e}/>)}
                 </div>
                 <ThemeProvider theme={buttontheme}>
-                    <Button variant = 'contained' onClick = {() => router.push('/questionPage')}>Didn't see anything you like?</Button>
+                    <Button variant = 'contained' onClick = {() => router.push('/questionPage')}>Didn&apos;t see anything you like?</Button>
                 </ThemeProvider>
             </div>
         </div>

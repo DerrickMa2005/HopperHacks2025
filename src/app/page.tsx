@@ -8,7 +8,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 import Image from 'next/image';
 import { googleLogout } from '@react-oauth/google';
 import HomeIcon from '@mui/icons-material/Home';
-import Chatbot from './Components/chatbot';
 
 export default function Home() {
   const buttontheme = createTheme({
@@ -105,7 +104,7 @@ scope: "https://www.googleapis.com/auth/calendar.events"
             <div className='border-solid border-black border-2 p-4 rounded-md flex flex-col gap-4 max-w-lg bg-red-200'>
               <h1>Google Calendar Integration</h1>
               <div className='border-black border-2 w-full flex flex-col'></div>
-              <p className='text-[1.5rem]'>Import events into Google Calendar to more easily track events of interest and make sure you don't miss any</p>
+              <p className='text-[1.5rem]'>Import events into Google Calendar to more easily track events of interest and make sure you don&apos;t miss any</p>
             </div>
             <div className='border-solid border-black border-2 p-4 rounded-md flex flex-col gap-4 max-w-lg bg-red-200'>
               <h1>Event Recommendation</h1>

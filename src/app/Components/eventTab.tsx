@@ -16,7 +16,7 @@ export default function EventTab({event} : {event: Record<string,string>}) {
     }
     
     const getDate = (date : string) => {
-        var d = new Date(Number(date) * 1000);
+        let d = new Date(Number(date) * 1000);
         return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
     }
     return (
