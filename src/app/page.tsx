@@ -1,11 +1,12 @@
 'use client'
 import { Button } from '@mui/material';
-import Font from 'react-font';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import SampleEventWheel from './Components/sampleEvents';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
+import { useGoogleLogin } from '@react-oauth/google';
+import Image from 'next/image';
+import { googleLogout } from '@react-oauth/google';
 
 
 export default function Home() {
@@ -19,22 +20,48 @@ export default function Home() {
       },
     },
   });
+  const [user, setUser] = useState("");
+  const [userPicture, setUserPicture] = useState("");
   const router = useRouter();
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const token = tokenResponse.access_token;
+      localStorage.setItem("token", token);
+      try{
+        const response = await fetch("https://www.googleapis.com/oauth2/v2/userinfo",{
+          method: "GET",
+          headers: {"Authorization": `Bearer ${token}`}
+      });
+      const data = await response.json();
+      setUser(data.email);
+      setUserPicture(data.picture);
+
+      }
+      catch(error){
+        console.log(error);
+      }
+      
+  }});
   return (
 
     <div className="mb-12">
       <ThemeProvider theme={buttontheme}>
         <div className='bg-green-400 flex justify-end p-4 gap-4 border-black border-b-4'>
-          <Button variant='contained' size="medium" onClick={() => router.push("/signin")}>Sign In</Button>
-          <Button variant='contained' size="medium" onClick={() => router.push('/signup')}>Sign Up</Button>
+          {user ? <Image onClick = {() =>{
+            googleLogout();
+            localStorage.clear();
+            setUser("");
+            setUserPicture("");
+          } } src = {userPicture} alt='' width = "50" height = "50"></Image>:<Button variant='contained' size="medium" onClick={() => login()}>Sign In</Button>}
+          {user ? null:<Button variant='contained' size="medium" onClick={() => login()}>Sign Up</Button>}
         </div>
       </ThemeProvider>
-      <Font family="Funnel Sans">
         <div className='text-4xl flex flex-col gap-16 items-center mt-24'>
           <div className='flex flex-col gap-10 items-center'>
             <h1>Looking to get out of your dorm but keep missing club events?</h1>
             <h1>Not sure what events campus has to offer?</h1>
           </div>
+          <h1>{user}</h1>
           <div className='flex flex-row gap-4 items-center justify-center'>
             <p className='text-5xl'>Introducing</p>
             <p className='text-5xl underline hover:text-7xl ease-out duration-300'>SBUWYD</p>
@@ -61,7 +88,6 @@ export default function Home() {
             <Button className={"hover:drop-shadow-lg ease-in duration-300"} variant='contained' size="large" onClick={() => router.push('/questionPage') }>Find Tailored Events</Button>
         </ThemeProvider>
         </div>
-      </Font >
     </div >
   );
 }
