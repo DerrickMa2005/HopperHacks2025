@@ -8,7 +8,7 @@ const supabaseUrl = 'https://cvgvsplspmhoomurnsmy.supabase.co/';
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2Z3ZzcGxzcG1ob29tdXJuc215Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAyNTQ1NzQsImV4cCI6MjA1NTgzMDU3NH0.CtuUnPiQqQNXP97LVwHDdf21cCfzaPdQ5kWQvLHY4Rc";
 const supabase = createClient(supabaseUrl, supabaseKey);
 async function getData() {
-  const { data, error } = await supabase.from('SampleEventsS').select();
+  const { data, error } = await supabase.from('SampleEvents').select();
   if (error) {
     console.error(error);
     return [];
